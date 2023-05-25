@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import {
   View,
   Text,
@@ -8,17 +8,17 @@ import {
   StatusBar,
   Image,
 } from 'react-native';
-import {ThemeContext} from '../context/ThemeContext';
-import {Divider, Switch} from 'react-native-paper';
+import { ThemeContext } from '../context/ThemeContext';
+import { Divider, Switch } from 'react-native-paper';
 import moment from 'moment';
 import Incomplete from '../components/Incomplete';
 import Complete from '../components/Complete';
 import TaskModal from '../components/Modal';
-import {useDispatch} from 'react-redux';
-import {addTodo} from '../redux/actions/actions';
+import { useDispatch } from 'react-redux';
+import { addTodo } from '../redux/actions/actions';
 
 const SomeComponent: React.FC = () => {
-  const {isDarkMode, toggleTheme, theme} = useContext(ThemeContext);
+  const { isDarkMode, toggleTheme, theme } = useContext(ThemeContext);
   const [modalVisible, setModalVisible] = useState(false);
   const [taskInput, setTaskInput] = useState('');
 
@@ -26,13 +26,15 @@ const SomeComponent: React.FC = () => {
 
   const handleAddTask = (task: string) => {
     // console.log('New task:', task);
-    dispatch(
-      addTodo({
+    dispatch({
+      type: "ADD_TODO", payload: {
         id: Math.floor(Math.random() * 1000),
         title: task,
         completed: false,
-      }),
-    );
+      }
+    })
+
+
     setModalVisible(false);
     setTaskInput('');
   };
@@ -47,7 +49,7 @@ const SomeComponent: React.FC = () => {
   const currentDate = moment().format('MMMM D, YYYY');
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: theme.backgroundColor}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.backgroundColor }}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={theme.backgroundColor}
@@ -55,7 +57,7 @@ const SomeComponent: React.FC = () => {
       <View style={styles.mainConatiner}>
         <View style={styles.headerStyle}>
           <View>
-            <Text style={[styles.textHeader, {color: theme.textColor}]}>
+            <Text style={[styles.textHeader, { color: theme.textColor }]}>
               {currentDate}
             </Text>
           </View>
